@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebStore.ViewModels;
+namespace WebStore.Domain.ViewModels;
 
 public class EmployeeViewModel : IValidatableObject
 {
@@ -35,15 +36,15 @@ public class EmployeeViewModel : IValidatableObject
             {
                 new ValidationResult("Везде Zxc", new []
                 {
-                    nameof(LastName), 
-                    nameof(Name), 
+                    nameof(LastName),
+                    nameof(Name),
                     nameof(Patronymic)
                 })
             };
 
         return new[]
         {
-            ValidationResult.Success!, 
+            ValidationResult.Success!,
         };
     }
 }
