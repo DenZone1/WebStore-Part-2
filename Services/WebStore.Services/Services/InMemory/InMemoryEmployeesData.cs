@@ -1,4 +1,6 @@
-﻿using WebStore.Data;
+﻿using Microsoft.Extensions.Logging;
+
+using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
 
