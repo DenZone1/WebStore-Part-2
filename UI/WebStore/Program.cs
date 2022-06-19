@@ -73,11 +73,11 @@ services.ConfigureApplicationCookie(opt =>
 });
 
 services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(config["WebAPI"]));
+services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(config["WebAPI"]));
 
 //services.AddScoped<IEmployeesData, InMemoryEmployeesData>();
 //services.AddScoped<IEmployeesData, SqlEmployeesData>();
-services.AddScoped<IEmployeesData, EmployeesClient>();
-
+//services.AddScoped<IEmployeesData, EmployeesClient>();
 //services.AddScoped<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SqlProductData>();
 services.AddScoped<IOrderService, SqlOrderService>();

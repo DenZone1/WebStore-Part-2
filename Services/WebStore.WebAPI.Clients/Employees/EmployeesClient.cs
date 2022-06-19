@@ -2,7 +2,7 @@
 using WebStore.WebAPI.Clients.Base;
 using WebStore.Interfaces.Services;
 using System.Net.Http.Json;
-using System.Net;
+
 
 namespace WebStore.WebAPI.Clients.Employees;
 
@@ -58,10 +58,10 @@ public class EmployeesClient : BaseClient, IEmployeesData
     }
     public bool Delete(int Id)
     {
-        //var response = Delete($"{Address}/{Id}");
-        //var success = response.IsSuccessStatusCode;
-        //return success;
-        throw new NotImplementedException();
+        var response = Delete($"{Address}/{Id}");
+        var success = response.IsSuccessStatusCode;
+        return success;
+
 
     }
 

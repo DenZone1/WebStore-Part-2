@@ -61,7 +61,7 @@ public abstract class BaseClient
         return response.EnsureSuccessStatusCode();
     }
 
-    protected HttpResponseMessage Delete<T>(string url) => DeleteAsync(url).Result;
+    protected HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
     protected async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken Cancel = default)
     {
         var response = await Http.DeleteAsync(url, Cancel).ConfigureAwait(false);
