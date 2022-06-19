@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Data;
 using WebStore.Services.Services.InCookies;
@@ -27,12 +28,12 @@ switch (db_type)
         services.AddDbContext<WebStoreDB>(opt => opt.UseSqlite(db_connection_string, o => o.MigrationsAssembly("WebStore.DAL.Sqlite")));
         break;
 }
+
 services.AddScoped<DbInitializer>();
 
-
-services.AddScoped<IEmployeesData, SqlEmployeesData>();
-services.AddScoped<IProductData, SqlProductData>();
-services.AddScoped<IOrderService, SqlOrderService>();
+services.AddIdentity<User, Role>(/*opt => { opt... }*/)
+   .AddEntityFrameworkStores<WebStoreDB>()
+   .AddDefaultTokenProviders();
 
 services.Configure<IdentityOptions>(opt =>
 {
@@ -52,6 +53,11 @@ services.Configure<IdentityOptions>(opt =>
     opt.Lockout.MaxFailedAccessAttempts = 10;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
 });
+
+services.AddScoped<IEmployeesData, SqlEmployeesData>();
+services.AddScoped<IProductData, SqlProductData>();
+services.AddScoped<IOrderService, SqlOrderService>();
+
 
 
 
