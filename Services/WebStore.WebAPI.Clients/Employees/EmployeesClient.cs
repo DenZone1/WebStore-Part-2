@@ -8,7 +8,7 @@ namespace WebStore.WebAPI.Clients.Employees;
 
 public class EmployeesClient : BaseClient, IEmployeesData
 {
-    public EmployeesClient(HttpClient Client, string Address/*специально ошибка!*/)
+    public EmployeesClient(HttpClient Client)
         : base(Client, "api/employees")
     {
         
@@ -58,9 +58,11 @@ public class EmployeesClient : BaseClient, IEmployeesData
     }
     public bool Delete(int Id)
     {
-        var response = Delete($"{Address}/{Id}");
-        var success = response.IsSuccessStatusCode;
-        return success;
+        //var response = Delete($"{Address}/{Id}");
+        //var success = response.IsSuccessStatusCode;
+        //return success;
+        throw new NotImplementedException();
+
     }
 
 }
