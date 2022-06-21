@@ -7,8 +7,8 @@ using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
 using WebStore.WebAPI.Clients.Base;
 
-namespace WebStore.WebAPI.Clients;
-public class ProductsClient : BaseClient , IProductData
+namespace WebStore.WebAPI.Clients.Products;
+public class ProductsClient : BaseClient, IProductData
 {
     public ProductsClient(HttpClient client) : base(client, "api/products")
     {
@@ -36,7 +36,7 @@ public class ProductsClient : BaseClient , IProductData
         return result.FromDTO();
     }
 
-   
+
 
     public Product? GetProductById(int Id)
     {
@@ -58,7 +58,7 @@ public class ProductsClient : BaseClient , IProductData
         return result.FromDTO();
     }
 
- 
 
-    
+
+
 }
