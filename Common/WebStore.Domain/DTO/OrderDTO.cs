@@ -14,7 +14,7 @@ public class OrderDTO
     public string Address { get; set; } = null!;
     public string? Description { get; set; }
     public DateTimeOffset Date { get; set; }
-    public IEnumerable<OrderDTO> Items { get; set; } = null!;
+    public IEnumerable<OrderItemDTO> Items { get; set; } = null!;
 
 }
 
@@ -30,7 +30,7 @@ public class OrderItemDTO
 public class CreateOrderDTO
 {
     public OrderViewModel Order { get; set; } = null!;
-    public IEnumerable<OrderDTO> Items { get; set; } = null!;
+    public IEnumerable<OrderItemDTO> Items { get; set; } = null!;
 
 }
 
@@ -67,7 +67,7 @@ public static class OrderDTOMapper
           Phone = Order.Phone,
           Date = Order.Date,
           Description = Order.Description,
-         // Items= Order.Items.Select(ToDTO)!
+          Items= Order.Items.Select(ToDTO)!
        };
     [return: NotNullIfNotNull("Order")]
     public static Order? FromDTO(this OrderDTO? Order) => Order is null
@@ -79,7 +79,7 @@ public static class OrderDTOMapper
           Phone = Order.Phone,
           Date = Order.Date,
           Description = Order.Description,
-       //  Items = Order.Items.Select(FromDTO).ToList()!
+        Items = Order.Items.Select(FromDTO).ToList()!
       };
 
     public static IEnumerable<OrderDTO?> ToDTO(this IEnumerable<Order?> Orders) => Orders.Select(ToDTO);
