@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.ViewModels;
-using WebStore.Services.Mapping;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.Controllers;
@@ -82,10 +81,10 @@ public class EmployeesController : Controller
     [Authorize(Roles = Role.Administrators)]
     public IActionResult Edit(EmployeeViewModel Model)
     {
-        if(Model.LastName == "Qwe" && Model.Name == "Qwe" && Model.Patronymic == "Qwe")
+        if (Model.LastName == "Qwe" && Model.Name == "Qwe" && Model.Patronymic == "Qwe")
             ModelState.AddModelError("", "Qwe - плохой выбор");
 
-        if(Model.Name == "Asd")
+        if (Model.Name == "Asd")
             ModelState.AddModelError("Name", "Asd - неважное имя");
 
         if (!ModelState.IsValid)
