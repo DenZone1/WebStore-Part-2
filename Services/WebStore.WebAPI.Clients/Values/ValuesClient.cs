@@ -36,7 +36,7 @@ public class ValuesClient : BaseClient, IValuesService
         if (response.IsSuccessStatusCode)
             return response.Content.ReadFromJsonAsync<string>().Result!;
 
-        return null;
+        return null!;
     }
 
     public void Add(string value)
