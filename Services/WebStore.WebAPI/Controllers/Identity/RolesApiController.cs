@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebStore.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebStore.Interfaces;
 
 namespace WebStore.WebAPI.Controllers.Identity;
 
 [ApiController]
-[Route("api/roles")]
+[Route(WebAPIAddresses.V1.Identity.Roles)]
 public class RolesApiController : ControllerBase
 {
     private readonly RoleStore<Role> _RoleStore;
