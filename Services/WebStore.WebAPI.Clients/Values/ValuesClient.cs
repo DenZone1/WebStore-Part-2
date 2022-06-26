@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 
 using Newtonsoft.Json.Linq;
 
+using WebStore.Interfaces;
 using WebStore.Interfaces.TestAPI;
 using WebStore.WebAPI.Clients.Base;
 
@@ -10,7 +11,7 @@ namespace WebStore.WebAPI.Clients.Values;
 
 public class ValuesClient : BaseClient, IValuesService
 {
-    public ValuesClient(HttpClient Client) : base(Client, "api/[controller]") 
+    public ValuesClient(HttpClient Client) : base(Client, WebAPIAddresses.V1.Values) 
     {
 
     }

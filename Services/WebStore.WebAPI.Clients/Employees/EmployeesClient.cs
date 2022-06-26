@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 
 using WebStore.Domain.Entities;
+using WebStore.Interfaces;
 using WebStore.Interfaces.Services;
 using WebStore.WebAPI.Clients.Base;
 
@@ -10,7 +11,7 @@ namespace WebStore.WebAPI.Clients.Employees;
 public class EmployeesClient : BaseClient, IEmployeesData
 {
     public EmployeesClient(HttpClient Client)
-        : base(Client, "api/employees")
+        : base(Client, WebAPIAddresses.V1.Employes)
     {
     }
 

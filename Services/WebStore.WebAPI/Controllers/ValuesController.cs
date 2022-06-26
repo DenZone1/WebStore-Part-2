@@ -2,11 +2,13 @@
 
 using Microsoft.AspNetCore.Mvc;
 
+using WebStore.Interfaces;
+
 namespace WebStore.WebAPI.Controllers;
 
 [ApiController]
 //[Route("api/values")]
-[Route("api/[controller]")]
+[Route(WebAPIAddresses.V1.Values)]
 public class ValuesController : ControllerBase
 {
     private const int __ValueCount = 10;

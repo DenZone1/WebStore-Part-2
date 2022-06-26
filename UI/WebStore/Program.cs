@@ -1,16 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using Polly;
+using Polly.Extensions.Http;
+
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Interfaces.Services;
+using WebStore.Interfaces.Services.Identity;
 using WebStore.Interfaces.TestAPI;
 using WebStore.Services.Data;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
 using WebStore.WebAPI.Clients.Employees;
+using WebStore.WebAPI.Clients.Identity;
 using WebStore.WebAPI.Clients.Orders;
 using WebStore.WebAPI.Clients.Products;
 using WebStore.WebAPI.Clients.Values;
@@ -20,26 +25,30 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
 
-//config.GetSection("DB")["Type"]
-var db_type = config["DB:Type"];
-var db_connection_string = config.GetConnectionString(db_type);
 
-switch (db_type)
-{
-    case "DockerDB":
-    case "SqlServer":
-        services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(db_connection_string));
-        break;
-    case "Sqlite":
-        services.AddDbContext<WebStoreDB>(opt => opt.UseSqlite(db_connection_string, o => o.MigrationsAssembly("WebStore.DAL.Sqlite")));
-        break;
-}
-
-services.AddScoped<DbInitializer>();
 
 services.AddIdentity<User, Role>(/*opt => { opt... }*/)
-   .AddEntityFrameworkStores<WebStoreDB>()
+   //.AddEntityFrameworkStores<WebStoreDB>()
    .AddDefaultTokenProviders();
+
+services.AddHttpClient("WebStoreAPIIdentity", client =>
+{
+    //client.DefaultRequestHeaders.Add("accept", "application/json");
+    client.BaseAddress = new(config["WebAPI"]);
+})
+   .AddTypedClient<IUserClient, UsersClient>()
+   .AddTypedClient<IUserStore<User>, UsersClient>()
+   .AddTypedClient<IUserRoleStore<User>, UsersClient>()
+   .AddTypedClient<IUserPasswordStore<User>, UsersClient>()
+   .AddTypedClient<IUserEmailStore<User>, UsersClient>()
+   .AddTypedClient<IUserPhoneNumberStore<User>, UsersClient>()
+   .AddTypedClient<IUserTwoFactorStore<User>, UsersClient>()
+   .AddTypedClient<IUserClaimStore<User>, UsersClient>()
+   .AddTypedClient<IUserLoginStore<User>, UsersClient>()
+   .AddTypedClient<IRoleClient, RolesClient>()
+   .AddTypedClient<IRoleStore<Role>, RolesClient>()
+   .AddPolicyHandler(GetRetryPolicy())
+   .AddPolicyHandler(GetCircuitBreakerPolicy());
 
 services.Configure<IdentityOptions>(opt =>
 {
@@ -78,7 +87,24 @@ services.AddHttpClient("WebStoreApi", client => client.BaseAddress = new(config[
     .AddTypedClient<IValuesService, ValuesClient>()
     .AddTypedClient<IEmployeesData, EmployeesClient>()
     .AddTypedClient<IProductData, ProductsClient>()
-    .AddTypedClient<IOrderService, OrdersClient>();
+    .AddTypedClient<IOrderService, OrdersClient>()
+    .AddPolicyHandler(GetRetryPolicy())
+    .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(int MaxRetryCount = 5, int MaxJitterTime = 1000)
+{
+    var jitter = new Random();
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .WaitAndRetryAsync(5, RetryAtempt => 
+        TimeSpan.FromSeconds(Math.Pow(2, RetryAtempt)) + TimeSpan.FromMilliseconds(jitter.Next(0, MaxJitterTime))
+        );
+}
+
+static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy() =>
+    HttpPolicyExtensions
+    .HandleTransientHttpError()
+    .CircuitBreakerAsync(handledEventsAllowedBeforeBreaking: 5, TimeSpan.FromSeconds(15));
 
 //services.AddHttpClient<IValuesService, ValuesClient>(client => client.BaseAddress = new(config["WebAPI"]));
 //services.AddHttpClient<IEmployeesData, EmployeesClient>(client => client.BaseAddress = new(config["WebAPI"]));
@@ -103,13 +129,7 @@ services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db_initializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-    await db_initializer.InitializeAsync(
-        RemoveBefore: app.Configuration.GetValue("DB:Recreate", false),
-        AddTestData: app.Configuration.GetValue("DB:AddTestData", false));
-}
+
 
 if (app.Environment.IsDevelopment())
 {
