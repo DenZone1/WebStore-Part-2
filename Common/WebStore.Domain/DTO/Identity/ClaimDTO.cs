@@ -7,7 +7,7 @@ public class ClaimDTO : UserDTO
 {
     public IEnumerable<Claim> Claims { get; init; } = null!;
 }
-public class ReplaceClainDTO : UserDTO
+public class ReplaceClaimDTO : UserDTO
 {
     public Claim Claim { get; init; } = null!;
     public Claim NewClaim { get; init; } = null!;
