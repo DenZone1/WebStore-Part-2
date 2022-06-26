@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 
 using WebStore.DAL.Context;
@@ -60,7 +61,12 @@ services.AddScoped<IOrderService, SqlOrderService>();
 
 
 
-services.AddControllers();
+services.AddControllers(opt => 
+{
+    opt.InputFormatters.Add(new XmlSerializerInputFormatter(opt));
+    opt.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+});
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen(opt =>
 {
