@@ -19,7 +19,7 @@ public class Log4NetLoggerProvider : ILoggerProvider
         (category, config) =>
         {
             var xml = new XmlDocument();
-xml.Load(config);
+            xml.Load(config);
             return new Log4NetLogger(category, xml["log4net"] ?? throw new InvalidOperationException("Не удалось извлечь из xml-документа элемент log4net"));
         },
         _ConfigurationFile);

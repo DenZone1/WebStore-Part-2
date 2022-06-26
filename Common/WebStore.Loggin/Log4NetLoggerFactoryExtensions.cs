@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Logging;
 
+using WebStore.Logging;
+
 namespace WebStore.Loggin;
 
 public static class Log4NetLoggerFactoryExtensions
@@ -21,7 +23,7 @@ public static class Log4NetLoggerFactoryExtensions
 
     public static ILoggingBuilder AddLog4Net(this ILoggingBuilder builder, string ConfigurationFile = "lof4net.config")
     {
-        builder.AddProvider(new Lof4NetLoggerProvider(ConfigurationFile.CheckPath()));
+        builder.AddProvider(new Log4NetLoggerProvider(ConfigurationFile.CheckPath()));
         return builder;
     }
 }
