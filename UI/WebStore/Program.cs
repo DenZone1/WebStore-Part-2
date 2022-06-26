@@ -22,22 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
 
-//config.GetSection("DB")["Type"]
-//var db_type = config["DB:Type"];
-//var db_connection_string = config.GetConnectionString(db_type);
 
-//switch (db_type)
-//{
-//    case "DockerDB":
-//    case "SqlServer":
-//        services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(db_connection_string));
-//        break;
-//    case "Sqlite":
-//        services.AddDbContext<WebStoreDB>(opt => opt.UseSqlite(db_connection_string, o => o.MigrationsAssembly("WebStore.DAL.Sqlite")));
-//        break;
-//}
-
-//services.AddScoped<DbInitializer>();
 
 services.AddIdentity<User, Role>(/*opt => { opt... }*/)
    //.AddEntityFrameworkStores<WebStoreDB>()
@@ -122,13 +107,7 @@ services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var db_initializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-//    await db_initializer.InitializeAsync(
-//        RemoveBefore: app.Configuration.GetValue("DB:Recreate", false),
-//        AddTestData: app.Configuration.GetValue("DB:AddTestData", false));
-//}
+
 
 if (app.Environment.IsDevelopment())
 {
