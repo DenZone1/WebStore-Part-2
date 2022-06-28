@@ -32,6 +32,8 @@ public class ValuesController : ControllerBase
     //[HttpDelete]
     public IActionResult GetAll() //метод получения всех данных из  WebAPI
     {
+        throw new Exception();//!!!ОШИБКА!!! для тестирования промежуточного ПО!!!!
+
         if (__Values.Count == 0)
             return NoContent();
         var values = __Values.Values;

@@ -25,13 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.DAL.Sqlite", "Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore", "UI\WebStore\WebStore.csproj", "{235D1419-ED95-4437-9739-6D92BEFFC890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Interfaces", "Services\WebStore.Interfaces\WebStore.Interfaces.csproj", "{E1FA6D23-A808-471A-8D44-5ABF3FACC622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Interfaces", "Services\WebStore.Interfaces\WebStore.Interfaces.csproj", "{E1FA6D23-A808-471A-8D44-5ABF3FACC622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Services", "Services\WebStore.Services\WebStore.Services.csproj", "{9EF16FAA-F204-4CB2-B576-193ABF5B07CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Services", "Services\WebStore.Services\WebStore.Services.csproj", "{9EF16FAA-F204-4CB2-B576-193ABF5B07CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.WebAPI", "Services\WebStore.WebAPI\WebStore.WebAPI.csproj", "{28B103DE-D7F6-4D28-9937-4938C35019F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.WebAPI", "Services\WebStore.WebAPI\WebStore.WebAPI.csproj", "{28B103DE-D7F6-4D28-9937-4938C35019F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.WebAPI.Clients", "Services\WebStore.WebAPI.Clients\WebStore.WebAPI.Clients.csproj", "{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.WebAPI.Clients", "Services\WebStore.WebAPI.Clients\WebStore.WebAPI.Clients.csproj", "{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Loggin", "Common\WebStore.Loggin\WebStore.Loggin.csproj", "{55202D6E-7A66-40CE-A314-FAD5DA31E305}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D0A739F0-297B-401E-86E3-F2EC477F510D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,14 @@ Global
 		{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55202D6E-7A66-40CE-A314-FAD5DA31E305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55202D6E-7A66-40CE-A314-FAD5DA31E305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55202D6E-7A66-40CE-A314-FAD5DA31E305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55202D6E-7A66-40CE-A314-FAD5DA31E305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A739F0-297B-401E-86E3-F2EC477F510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A739F0-297B-401E-86E3-F2EC477F510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A739F0-297B-401E-86E3-F2EC477F510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A739F0-297B-401E-86E3-F2EC477F510D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +96,8 @@ Global
 		{9EF16FAA-F204-4CB2-B576-193ABF5B07CE} = {DF5B52D7-83C3-49BA-913E-0CB675CC241D}
 		{28B103DE-D7F6-4D28-9937-4938C35019F6} = {DF5B52D7-83C3-49BA-913E-0CB675CC241D}
 		{FD2BF3E4-935E-40B5-9DE2-36EFFA4B2116} = {DF5B52D7-83C3-49BA-913E-0CB675CC241D}
+		{55202D6E-7A66-40CE-A314-FAD5DA31E305} = {1D40CC3E-781C-418C-A383-D03939AD128F}
+		{D0A739F0-297B-401E-86E3-F2EC477F510D} = {22882943-7C86-4834-86D5-60D0DEE6C029}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64F593E4-E3ED-44B5-A0B1-27ECA56D6851}
