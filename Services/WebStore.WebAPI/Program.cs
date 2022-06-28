@@ -9,6 +9,7 @@ using WebStore.Interfaces.Services;
 using WebStore.Loggin;
 using WebStore.Services.Data;
 using WebStore.Services.Services.InSQL;
+using WebStore.WebAPI.Infarastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -115,6 +116,8 @@ if (app.Environment.IsDevelopment())
     }
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandler>(); // здесь добавили промежуточное ПО
 
 app.MapControllers();
 
