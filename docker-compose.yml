@@ -5,8 +5,24 @@ services:
     container_name: MSSQL
     image: "mcr.microsoft.com/mssql/server:2019-latest"
 
-  webstore:
+  logs:
+    container_name: SEQ
+    image: "datalust/seq:latest"
+
+
+  api:
     image: ${DOCKER_REGISTRY-}webstore
+    depends_on:
+     - db
     build:
       context: .
-      dockerfile: WebStore/Dockerfile
+      dockerfile: Services/WebStore.WebAPI/Dockerfile
+
+  webstore:
+    image: ${DOCKER_REGISTRY-}webstore
+    depends_on:
+        - logs
+        - api
+    build:
+      context: .
+      dockerfile: UI/WebStore/Dockerfile
