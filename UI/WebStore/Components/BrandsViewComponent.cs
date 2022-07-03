@@ -11,7 +11,7 @@ public class BrandsViewComponent : ViewComponent
 
     public BrandsViewComponent(IProductData ProductData) => _ProductData = ProductData;
 
-    public IViewComponentResult Invoke() => View(GetBrands());
+    public IViewComponentResult Invoke(string BrandId) => View(GetBrands());
 
     private IEnumerable<BrandViewModel> GetBrands() =>
         _ProductData.GetBrands()
