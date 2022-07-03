@@ -39,7 +39,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C4E67B9B-F62D-43A2-8A6F-B2E1EF416BCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Tests", "Tests\WebStore.Tests\WebStore.Tests.csproj", "{D7335912-CB58-487E-A7A3-1C280AEC9501}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStore.Tests", "Tests\WebStore.Tests\WebStore.Tests.csproj", "{D7335912-CB58-487E-A7A3-1C280AEC9501}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
