@@ -18,6 +18,7 @@ using WebStore.Interfaces.Services.Identity;
 using WebStore.Interfaces.TestAPI;
 using WebStore.Loggin;
 using WebStore.Services.Data;
+using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InSQL;
 using WebStore.WebAPI.Clients.Employees;
@@ -142,7 +143,11 @@ static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy() =>
 //services.AddScoped<IProductData, InMemoryProductData>();
 //services.AddScoped<IProductData, SqlProductData>();
 //services.AddScoped<IOrderService, SqlOrderService>();
-services.AddScoped<ICartService, InCookiesCartService>();
+
+services.AddScoped<ICartStore, InCookiesCartStore>();
+services.AddScoped<ICartService, CartService>();
+//services.AddScoped<ICartService, InCookiesCartService>();
+
 
 services.AddControllersWithViews(opt =>
 {
