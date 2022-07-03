@@ -3,19 +3,14 @@
 using Microsoft.AspNetCore.Http;
 
 using WebStore.Domain.Entities;
-using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
-using WebStore.Services.Mapping;
 
 namespace WebStore.Services.Services.InCookies;
 
-public class InCookiesCartService : ICartService
+public class InCookiesCartStore : ICartStore
 {
     private readonly IHttpContextAccessor _HttpContextAccessor;
-    private readonly IProductData _ProductData;
     private readonly string _CartName;
-
-
 
     public Cart Cart
     {
@@ -37,67 +32,20 @@ public class InCookiesCartService : ICartService
         }
         set => ReplaceCart(_HttpContextAccessor.HttpContext!.Response.Cookies, JsonSerializer.Serialize(value));
     }
+
     private void ReplaceCart(IResponseCookies cookies, string cart)
     {
         cookies.Delete(_CartName);
         cookies.Append(_CartName, cart);
     }
 
-    public InCookiesCartService(IHttpContextAccessor HttpContextAccessor, IProductData ProductData)
+    public InCookiesCartStore(IHttpContextAccessor HttpContextAccessor)
     {
         _HttpContextAccessor = HttpContextAccessor;
-        _ProductData = ProductData;
 
         var user = HttpContextAccessor.HttpContext!.User;
         var user_name = user.Identity!.IsAuthenticated ? $"-{user.Identity.Name}" : null;
 
         _CartName = $"WebStore.GB.Cart{user_name}";
-    }
-
-    public void Add(int Id)
-    {
-        var cart = Cart;
-        cart.Add(Id);
-        Cart = cart;
-    }
-
-    public void Decrement(int Id)
-    {
-        var cart = Cart;
-        cart.Decrement(Id);
-        Cart = cart;
-    }
-
-    public void Remove(int Id)
-    {
-        var cart = Cart;
-        cart.Remove(Id);
-        Cart = cart;
-    }
-
-    public void Clear()
-    {
-        var cart = Cart;
-        cart.Clear();
-        Cart = cart;
-    }
-
-    public CartViewModel GetViewModel()
-    {
-        var cart = Cart;
-
-        var products = _ProductData.GetProducts(new()
-        {
-            Ids = cart.Items.Select(item => item.ProductId).ToArray(),
-        });
-
-        var products_views = products.ToView().ToDictionary(p => p!.Id);
-
-        return new()
-        {
-            Items = cart.Items
-               .Where(item => products_views.ContainsKey(item.ProductId))
-               .Select(item => (products_views[item.ProductId], item.Quantity))!,
-        };
     }
 }
