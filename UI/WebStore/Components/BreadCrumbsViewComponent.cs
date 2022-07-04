@@ -35,6 +35,6 @@ public class BreadCrumbsViewComponent : ViewComponent
             model.Product = _ProductData.GetProductById(product_id)?.Name;
 
 
-        return View();
+        return View(model);
     }
 }
