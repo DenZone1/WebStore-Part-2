@@ -30,6 +30,8 @@ public class SectionDTO
     public int Order { get; init; }
 
     public int? ParentId { get; init; }
+
+    public IEnumerable<int> ProductIds { get; init; } = null!;
 }
 
 public class BrandDTO
@@ -40,7 +42,7 @@ public class BrandDTO
 
     public int Order { get; init; }
 
-    public int ProductsCount { get; init; }
+    public IEnumerable<int> ProductIds { get; init; } = null!;
 }
 
 public static class BrandDTOMapper
@@ -53,7 +55,7 @@ public static class BrandDTOMapper
             Id = brand.Id,
             Name = brand.Name,
             Order = brand.Order,
-            ProductsCount = brand.Products.Count,
+            ProductIds = brand.Products.Select(p => p.Id),
         };
 
     [return: NotNullIfNotNull("brand")]
@@ -64,7 +66,7 @@ public static class BrandDTOMapper
             Id = brand.Id,
             Name = brand.Name,
             Order = brand.Order,
-            Products = new Product[brand.ProductsCount],
+            Products = brand.ProductIds.Select(id => new Product { Id = id }).ToArray(),
         };
 
     public static IEnumerable<BrandDTO> ToDTO(this IEnumerable<Brand>? brands) => brands?.Select(ToDTO)!;
@@ -83,6 +85,7 @@ public static class SectionDTOMapper
             Name = section.Name,
             Order = section.Order,
             ParentId = section.ParentId,
+            ProductIds = section.Products.Select(p => p.Id),
         };
 
     [return: NotNullIfNotNull("section")]
@@ -94,6 +97,7 @@ public static class SectionDTOMapper
             Name = section.Name,
             Order = section.Order,
             ParentId = section.ParentId,
+            Products = section.ProductIds.Select(id => new Product { Id = id }).ToArray(),
         };
 
     public static IEnumerable<SectionDTO> ToDTO(this IEnumerable<Section>? sections) => sections?.Select(ToDTO)!;
