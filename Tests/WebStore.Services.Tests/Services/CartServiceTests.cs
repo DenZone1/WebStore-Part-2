@@ -9,10 +9,11 @@ using WebStore.Services.Services;
 using Assert = Xunit.Assert;
 
 namespace WebStore.Services.Tests.Services;
+
 [TestClass]
 public class CartServiceTests
 {
-    private Cart _Cart;
+    private Cart _Cart = null!;
     private Mock<IProductData> _ProductDataMock = null!;
     private Mock<ICartStore> _CartStoreMock = null!;
 
@@ -33,7 +34,7 @@ public class CartServiceTests
         _ProductDataMock = new Mock<IProductData>();
         _ProductDataMock
            .Setup(c => c.GetProducts(It.IsAny<ProductFilter>()))
-           .Returns(new[]
+           .Returns(new Page<Product>(new[]
             {
                 new Product
                 {
@@ -68,13 +69,12 @@ public class CartServiceTests
                     SectionId = 3,
                     Section = new Section{ Id = 3, Name = "Section 3", Order = 3 },
                 },
-            });
-
+            }, 1, 3, 3));
 
         _CartStoreMock = new Mock<ICartStore>();
         _CartStoreMock.Setup(c => c.Cart).Returns(_Cart);
-        _CartService = new CartService(_ProductDataMock.Object, _CartStoreMock.Object);
 
+        _CartService = new CartService(_ProductDataMock.Object, _CartStoreMock.Object);
     }
 
 
@@ -126,6 +126,7 @@ public class CartServiceTests
 
         Assert.Equal(expected_total_price, actual_total_price);
     }
+
 
     [TestMethod]
     public void CartService_Add_WorkCorrect()
@@ -198,7 +199,7 @@ public class CartServiceTests
         Assert.Single(_Cart.Items);
     }
 
-        [TestMethod]
+    [TestMethod]
     public void CartService_GetViewModel_WorkCorrect()
     {
         const int expected_items_count = 4;
