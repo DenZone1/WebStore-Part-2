@@ -17,7 +17,7 @@ public static class Log4NetLoggerFactoryExtensions
             return FilePath;
 
         var assembly = Assembly.GetEntryAssembly();
-        var dir = Path.GetDirectoryName(assembly.Location)!;
+        var dir = Path.GetDirectoryName(assembly!.Location)!;
         return Path.Combine(dir, FilePath);
     }
 

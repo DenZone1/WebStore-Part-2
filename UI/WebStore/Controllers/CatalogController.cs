@@ -35,6 +35,12 @@ public class CatalogController : Controller
                .OrderBy(p => p.Order)
                .Select(p => _Mapper.Map<ProductViewModel>(p)),
             //Products = products.OrderBy(p => p.Order).ToView()!,
+            PageModel = new()
+            {
+                Page = filter.PageNumber,
+                PageSize = filter.PageSize ?? 0,
+                TotalPages = products.PageCount,
+            }
         });
     }
 
