@@ -52,4 +52,11 @@ public class CatalogController : Controller
 
         return View(product.ToView());
     }
+
+    public IActionResult GetProductsAPI([Bind("SectionId,BrandId,PageNumber,PageSize")] ProductFilter filter)
+    {
+        var products = _ProductData.GetProducts(filter);
+
+        return PartialView("Parial/_Products", products.Items.Select(p => _Mapper.Map<ProductViewModel>(p)));
+    }
 }
