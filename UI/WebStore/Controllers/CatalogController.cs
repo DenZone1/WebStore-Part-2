@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Mvc;
+
 using WebStore.Domain;
 using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
@@ -9,6 +11,8 @@ namespace WebStore.Controllers;
 
 public class CatalogController : Controller
 {
+    private const string __CatalogPageSize = "CatalogPageSize";
+
     private readonly IProductData _ProductData;
     private readonly IMapper _Mapper;
     private readonly IConfiguration _Configuration;
@@ -22,7 +26,7 @@ public class CatalogController : Controller
 
     public IActionResult Index([Bind("SectionId,BrandId,PageNumber,PageSize")] ProductFilter filter)
     {
-        filter.PageSize ??= int.TryParse(_Configuration["CatalogPageSize"], out var page_size) ? page_size : null;
+        filter.PageSize ??= int.TryParse(_Configuration[__CatalogPageSize], out var page_size) ? page_size : null;
 
         var products = _ProductData.GetProducts(filter);
 
@@ -51,5 +55,13 @@ public class CatalogController : Controller
             return NotFound();
 
         return View(product.ToView());
+    }
+
+    public IActionResult GetProductsAPI([Bind("SectionId,BrandId,PageNumber,PageSize")] ProductFilter filter)
+    {
+        filter.PageSize ??= _Configuration.GetValue(__CatalogPageSize, 6);
+
+        var products = _ProductData.GetProducts(filter);
+        return PartialView("Partial/_Products", products.Items.Select(p => _Mapper.Map<ProductViewModel>(p)));
     }
 }

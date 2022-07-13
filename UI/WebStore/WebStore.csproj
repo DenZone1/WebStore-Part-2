@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\Cart\CartLogic.js" />
+    <None Include="wwwroot\js\Catalog\CatalogLogic.js" />
   </ItemGroup>
 
   <ItemGroup>
