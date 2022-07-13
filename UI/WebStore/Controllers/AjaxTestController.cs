@@ -44,5 +44,5 @@ public class AjaxTestController : Controller
         });
     }
 
-
+    public IActionResult Chat() => View();
 }
